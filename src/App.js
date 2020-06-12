@@ -1,13 +1,12 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-import Homepage from './components/Hompepage/homepage.component'
+import Homepage from "./pages/homepage/homepage.component";
 
 function App() {
   return (
     <div className="App">
-      Crown Clothing
-      <Homepage/>
+      <Homepage />
     </div>
   );
 }
