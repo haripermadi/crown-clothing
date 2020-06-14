@@ -26,7 +26,7 @@ class SignIn extends React.Component {
           password: "",
         },
         () => {
-          this.props.history.push("/");
+          // this.props.history.push("/");
         }
       );
     } catch (err) {
@@ -42,7 +42,7 @@ class SignIn extends React.Component {
   };
 
   render() {
-    console.log("--------", this.props.history);
+    console.log("--------signincomponent");
 
     return (
       <div className="sign-in">
