@@ -60,6 +60,23 @@ export const addCollectionAndDocuments = async (collectionKey, dataToAdd) => {
   return await batch.commit();
 };
 
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items,
+    };
+  });
+
+  return transformCollection.reduce((acc, cumm) => {
+    acc[cumm.title.toLowerCase()] = cumm;
+    return acc;
+  }, {});
+};
+
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ promp: "select_account" });
 
