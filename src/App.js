@@ -4,7 +4,11 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import {
+  auth,
+  createUserProfileDocument,
+  addCollectionAndDocuments,
+} from "./firebase/firebase.utils";
 
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
@@ -15,6 +19,7 @@ import Header from "./components/header/header.component";
 
 import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
+import { selectCollectionArray } from "./redux/shop/shop.selectors";
 
 class App extends React.Component {
   // constructor() {
@@ -28,8 +33,8 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("App---componentdidmount---");
-    const { setCurrentUser } = this.props;
-    auth.onAuthStateChanged(async (userAuth) => {
+    const { setCurrentUser, collectionArray } = this.props;
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       console.log(userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -42,9 +47,13 @@ class App extends React.Component {
             },
           });
         });
-      } else {
-        setCurrentUser(null);
       }
+      setCurrentUser(null);
+      // move data to firebase database
+      // addCollectionAndDocuments(
+      //   "collections",
+      //   collectionArray.map(({ title, items }) => ({ title, items }))
+      // );
     });
   }
 
@@ -53,7 +62,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("App---render---");
+    console.log("App---render---", this.props);
 
     return (
       <div className="App">
@@ -81,6 +90,7 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
+  collectionArray: selectCollectionArray,
 });
 
 const mapDispatchToProps = (dispatch) => ({
