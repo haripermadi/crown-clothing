@@ -19,6 +19,7 @@ import Header from "./components/header/header.component";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { selectCollectionArray } from "./redux/shop/shop.selectors";
+import { checkUserSession } from "./redux/user/user.action";
 
 class App extends React.Component {
   // constructor() {
@@ -31,24 +32,7 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    console.log("App---componentdidmount---");
-    // const { setCurrentUser, collectionArray } = this.props;
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-    //   console.log(userAuth);
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     userRef.onSnapshot((snapShot) => {
-    //       // console.log("snapshot-didmount--", snapShot);
-    //       setCurrentUser({
-    //         currentUser: {
-    //           id: snapShot.id,
-    //           ...snapShot.data(),
-    //         },
-    //       });
-    //     });
-    //   }
-    //   setCurrentUser(null);
-    // });
+    this.props.checkUserSession();
   }
 
   componentWillUnmount() {
@@ -87,4 +71,8 @@ const mapStateToProps = createStructuredSelector({
   collectionArray: selectCollectionArray,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
