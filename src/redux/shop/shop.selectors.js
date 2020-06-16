@@ -28,3 +28,13 @@ export const selectCollectionArray = createSelector(
   (collections) =>
     collections ? Object.keys(collections).map((key) => collections[key]) : []
 );
+
+export const selectIsFetchingCollection = createSelector(
+  [selectShop],
+  (shop) => shop.isFetching
+);
+
+export const selectIsCollectionsLoaded = createSelector(
+  [selectShop],
+  (shop) => !!shop.collections // !! for truthy/falsy
+);
