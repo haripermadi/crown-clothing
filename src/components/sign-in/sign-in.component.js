@@ -1,10 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import "./sign-in.styles.scss";
-import { withRouter } from "react-router-dom";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { signInWithGoogle, auth } from "../../firebase/firebase.utils";
+// import { signInWithGoogle, auth } from "../../firebase/firebase.utils";
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from "../../redux/user/user.action";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -18,20 +23,7 @@ class SignIn extends React.Component {
   handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState(
-        {
-          email: "",
-          password: "",
-        },
-        () => {
-          // this.props.history.push("/");
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+    this.props.signInWithEmail(email, password);
   };
 
   handleChangeInput = (e) => {
@@ -69,7 +61,7 @@ class SignIn extends React.Component {
           <div className="button">
             <CustomButton type="submit">Sign In</CustomButton>
             <CustomButton
-              onClick={signInWithGoogle}
+              onClick={this.props.signInWithGoogle}
               isGoogleSignIn
               type="button"
             >
@@ -82,4 +74,10 @@ class SignIn extends React.Component {
   }
 }
 
-export default withRouter(SignIn);
+const mapStateToProps = (dispatch) => ({
+  signInWithGoogle: () => dispatch(googleSignInStart()),
+  signInWithEmail: (email, password) =>
+    dispatch(emailSignInStart({ email, password })),
+});
+
+export default connect(null, mapStateToProps)(SignIn);

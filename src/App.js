@@ -17,7 +17,6 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 
 import Header from "./components/header/header.component";
 
-import { setCurrentUser } from "./redux/user/user.action";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { selectCollectionArray } from "./redux/shop/shop.selectors";
 
@@ -33,28 +32,23 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("App---componentdidmount---");
-    const { setCurrentUser, collectionArray } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      console.log(userAuth);
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) => {
-          // console.log("snapshot-didmount--", snapShot);
-          setCurrentUser({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data(),
-            },
-          });
-        });
-      }
-      setCurrentUser(null);
-      // move data to firebase database
-      // addCollectionAndDocuments(
-      //   "collections",
-      //   collectionArray.map(({ title, items }) => ({ title, items }))
-      // );
-    });
+    // const { setCurrentUser, collectionArray } = this.props;
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    //   console.log(userAuth);
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth);
+    //     userRef.onSnapshot((snapShot) => {
+    //       // console.log("snapshot-didmount--", snapShot);
+    //       setCurrentUser({
+    //         currentUser: {
+    //           id: snapShot.id,
+    //           ...snapShot.data(),
+    //         },
+    //       });
+    //     });
+    //   }
+    //   setCurrentUser(null);
+    // });
   }
 
   componentWillUnmount() {
@@ -93,8 +87,4 @@ const mapStateToProps = createStructuredSelector({
   collectionArray: selectCollectionArray,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
