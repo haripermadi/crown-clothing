@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import userActionTypes from "../redux/user/user.types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB6jd3SQ9EhJfGizsxPBo3F6QSAUVMI_Jc",
@@ -24,7 +25,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
 
-  console.log("fire----", snapShot);
+  console.log("fire----", snapShot, userAuth);
   if (!snapShot.exists) {
     const { displayName, email, photoURL } = userAuth;
     const createdAt = new Date();

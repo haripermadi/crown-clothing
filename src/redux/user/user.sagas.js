@@ -54,10 +54,15 @@ export function* signInWithEmail({ payload: { email, password } }) {
 
 export function* isUserLogin() {
   try {
-    const userAuth = getCurrentUser();
-    console.log("check------", userAuth);
-    if (!userAuth) return;
-    yield getSnapshotFromUser(userAuth);
+    const userAuth = yield getCurrentUser();
+    console.log("check--userlogin----", userAuth, !userAuth);
+    if (!userAuth) {
+      console.log("check--userlogin---if-");
+      return;
+    } else {
+      console.log("check--userlogin---else-");
+      yield getSnapshotFromUser(userAuth);
+    }
   } catch (error) {
     yield put(signInFail(error.message));
   }

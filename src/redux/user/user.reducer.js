@@ -21,6 +21,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
       };
     case userActionTypes.SIGN_OUT_SUCCESS:
+      console.log("signout success----");
+
       return {
         ...state,
         currentUser: null,
