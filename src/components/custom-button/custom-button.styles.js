@@ -16,11 +16,17 @@ const invertedButtonStyle = css`
   background-color: white;
   color: black;
   border: 1px solid black;
+  width: 80%;
+  opacity: 0.7;
+  position: absolute;
+  top: 255px;
 
   &:hover {
+    display: flex;
     background-color: black;
     color: white;
     border: none;
+    opacity: 0.85;
   }
 `;
 
@@ -36,6 +42,8 @@ const googleSignInStyles = css`
 `;
 
 const getButtonStyles = (props) => {
+  console.log("button---", props);
+
   if (props.isGoogleSignIn) {
     return googleSignInStyles;
   }

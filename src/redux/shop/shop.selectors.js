@@ -20,10 +20,11 @@ export const selectShopCollectionCategory = (slug) =>
     [selectShopCollections],
     (collections) =>
       // collections.find((item) => item.id === COLLECTION_ID_MAP[slug])
-      collections[slug] // data normalitation change array to object see shop.data.js/ hash table data structure
+      collections ? collections[slug] : null // data normalitation change array to object see shop.data.js/ hash table data structure
   );
 
 export const selectCollectionArray = createSelector(
   [selectShopCollections],
-  (collections) => Object.keys(collections).map((key) => collections[key])
+  (collections) =>
+    collections ? Object.keys(collections).map((key) => collections[key]) : []
 );
