@@ -60,11 +60,16 @@ export const CustomButtonContainer = styled.button`
   font-size: 15px;
   letter-spacing: 0.5px;
   line-height: 50px;
-  padding: 0 35px 0 35px;
+  padding: 0 35px;
   cursor: pointer;
   text-transform: uppercase;
   display: flex;
   justify-content: center;
 
   ${getButtonStyles}
+
+  @media screen and (max-width: 800px) {
+    min-width: 150px;
+    font-size: 14px;
+  }
 `;

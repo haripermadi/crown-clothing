@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  // background-color: violet;
 
   .title {
     font-size: 28px;
@@ -12,6 +11,17 @@
   .preview {
     display: flex;
     justify-content: space-between;
-    // background-color: yellowgreen;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .collection {
+    align-items: center;
+
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+    }
   }
 }
